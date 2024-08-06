@@ -16,6 +16,7 @@ for p = 1:5                            % number of iterations after initial cond
             % Tried using just if statement and 'continue' but didn't work
             % as it would stop the for statement.
             % Maybe need to use 'break'.
+            % There is a simpler way which I've worked out but not updated.
                 if abs(circles(b).y - max([circles(1:n).y]))>1e-10 || isnan(circles(a).y) == 1
                     continue
                 else
