@@ -21,22 +21,39 @@ function ndisk_dip = dip(adjacent,r3)
     gdsize = size(grad);
     ndisk_dip = [];
     for kk = 1:gdsize(2)
-        if grad(1,kk) < -1e-7 && grad(1,mod(kk,gdsize(2))+1) > 1e-7
+        if grad(1,kk) < epsilon && grad(1,mod(kk,gdsize(2))+1) > epsilon
 
             p = 0;
-            %disp(size(grad));
-            while grad(1,mod(kk,gdsize(2))-p) < -1e-7
-                %disp(gdsize(2)-p);
+            l = kk;
+
+            while grad(1,l) < epsilon 
                 p = p + 1;
+                if kk-p == 0
+                    l = gdsize(2);
+                else
+                    l = mod(kk-p,gdsize(2));
+                end
             end
 
             q = 0;
-            while grad(1,mod(kk,gdsize(2))+q) > 1e-7
+            while grad(1,mod(kk+q,gdsize(2))+1) > epsilon
                 q = q + 1;
             end
 
-            for a = [kk-p+gdsize(2):gdsize(2),1:kk]
-                for b = [kk+1:gdsize(2),1:kk+q-gdsize(2)]
+            if kk-p>0
+                down = kk-p:kk;
+            else
+                down = [kk-p+gdsize(2):gdsize(2),1:kk];
+            end
+
+            if kk+1+q>gdsize(2)
+                up = [kk+1:gdsize(2),1:kk+1+q-gdsize(2)];
+            else
+                up = kk+1:kk+1+q;
+            end
+
+            for a = down
+                for b = up
                     [x3,y3] = newdisk(adjacent(a,1),adjacent(a,2), ...
                                 adjacent(a,3),adjacent(b,4),adjacent(b,5), ...
                                 adjacent(b,6),r3);
@@ -48,57 +65,3 @@ function ndisk_dip = dip(adjacent,r3)
     end
     
 end
-
-
-
-    %         if kk-p < 0
-    %             if kk + q > gdsize(2)
-    %                 for a = 1:kk-p+gdsize(2)
-    %                     for b = kk:kk+q
-    %                         [x3,y3] = newdisk(adjacent(a,1),adjacent(a,2), ...
-    %                             adjacent(a,3),adjacent(b,4),adjacent(b,5), ...
-    %                             adjacent(b,6),r3);
-    %                         ndisk = [ndisk; [x3,y3,r3]];
-    %                     end
-    %                 end
-    %             else
-    %                 for a = 1:kk-p+gdsize(2)
-    %                     for b = kk:kk+q
-    %                         [x3,y3] = newdisk(adjacent(a,1),adjacent(a,2), ...
-    %                             adjacent(a,3),adjacent(b,4),adjacent(b,5), ...
-    %                             adjacent(b,6),r3);
-    %                         ndisk = [ndisk; [x3,y3,r3]];
-    %                     end
-    %                 end
-    %             end
-    % 
-    %         else
-    %             if kk + q > gdsize(2)
-    %                 for a = 1:kk-p+gdsize(2)
-    %                     for b = kk:kk+q
-    %                         [x3,y3] = newdisk(adjacent(a,1),adjacent(a,2), ...
-    %                             adjacent(a,3),adjacent(b,4),adjacent(b,5), ...
-    %                             adjacent(b,6),r3);
-    %                         ndisk = [ndisk; [x3,y3,r3]];
-    %                     end
-    %                 end
-    %             else
-    %                 for a = 1:kk-p+gdsize(2)
-    %                     for b = kk:kk+q
-    %                         [x3,y3] = newdisk(adjacent(a,1),adjacent(a,2), ...
-    %                             adjacent(a,3),adjacent(b,4),adjacent(b,5), ...
-    %                             adjacent(b,6),r3);
-    %                         ndisk = [ndisk; [x3,y3,r3]];
-    %                     end
-    %                 end  
-    %             end
-    %         end
-    %     end
-    % end 
-    % 
-    % if grad(1,gdsize(2)) < -1e-10 && grad(1,1) > 1e-10
-    %     [x3,y3] = newdisk(adjacent(gdsize(2),1),adjacent(gdsize(2),2), ...
-    %             adjacent(gdsize(2),3),adjacent(1,4),adjacent(1,5), ...
-    %             adjacent(1,6), r3);
-    %     ndisk = [ndisk; [x3,y3,r3]];
-    % end

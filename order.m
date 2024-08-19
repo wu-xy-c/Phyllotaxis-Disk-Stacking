@@ -1,7 +1,7 @@
 % This script is a function which orders the set of edges on the top
-% level starting from 0 to 1. Using inputs ..., the function orders the
-% edges individual to go from left to right and then orders the edges from
-% 0 to 1, outputting the set of edges in increasing order ordered_edges
+% level starting from 0 to 1. Using the input adjacent, the function orders
+% the edges individual to go from left to right and then orders the edges 
+% from 0 to 1, outputting the set of edges in increasing order ordered_edges
 % and the number of edges s.
 
 function [ordered_edges,s] = order(adjacent)

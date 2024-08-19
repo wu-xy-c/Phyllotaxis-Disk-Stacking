@@ -42,8 +42,6 @@ function [x3,y3] = newdisk(x1,y1,r1,x2,y2,r2,r3)
         r2 = r22;
     end
 
-    %disp([x1,y1,r1,x2,y2,r2]);
-
     d13 = r1 + r3;                        % distance between disks 1 and 3
     d23 = r2 + r3;                        % distance between disks 2 and 3
 
@@ -54,22 +52,16 @@ function [x3,y3] = newdisk(x1,y1,r1,x2,y2,r2,r3)
         horz = atan(grad);
     end
 
-    %disp(horz);
-
     tri = acos((d12^2 + d13^2 - d23^2)/(2*d12*d13));   % angle in triangle
-    %disp(tri);
+
     theta = horz + tri;                   % angle needed to compute centre
 
     if theta>pi/2
         theta = pi - theta;
-        %disp(theta);
-        %disp(x2-x1);
         if (x2-x1)<0.5
             x3 = mod(real(x1 - d13*cos(theta)), 1);
-            %disp(x3);
         else    
             x3 = mod(real(d13*cos(theta) + x1), 1);
-            %disp(x3);
         end
     else
         if (x2-x1)>0.5
@@ -80,20 +72,5 @@ function [x3,y3] = newdisk(x1,y1,r1,x2,y2,r2,r3)
     end
 
     y3 = real(d13*sin(theta) + y1);     % the y is imaginary but idk how
-    %disp('x3 ='), disp(x3);
-    %disp('y3='),disp(y3);
-
-    % if -0.5<(x2-x1)<0 || (x2-x1)>0.5
-    %     x3 = mod(real(x1 - d13*cos(theta)), 1);
-    % else    
-    %     x3 = mod(real(d13*cos(theta) + x1), 1);
-    % end
-    % 
-    % y3 = real(d13*sin(theta) + y1);     
-
-    % [x,y] = circle(x3,y3,r3);
-    % plot(x,y);
-    % hold on;
-    % plot(x3,y3,'k.');
 
 end

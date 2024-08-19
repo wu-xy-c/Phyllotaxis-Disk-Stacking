@@ -27,25 +27,18 @@ function e = top_level(circles,n)
         end
     end
     
-    %disp(possnextdisk);
     [~,II] = max(possnextdisk(:,5));
-    %disp(II)
     top_edges = [possnextdisk(II,:)];
     k = 2;
     circles_top(k).x = possnextdisk(II,4);
     circles_top(k).y = possnextdisk(II,5);
     circles_top(k).r = possnextdisk(II,6);
     
-    while abs(top_edges(1,1) - top_edges(end,4))>1e-3 || ...
-            abs(top_edges(1,2) - top_edges(end,5))>1e-3 || ...
-            abs(top_edges(1,3) - top_edges(end,6))>1e-3
-        %disp(abs(top_edges(1,1) - top_edges(end,4)));
+    while abs(top_edges(1,1) - top_edges(end,4))>epsilon || ...
+            abs(top_edges(1,2) - top_edges(end,5))>epsilon || ...
+            abs(top_edges(1,3) - top_edges(end,6))>epsilon
         possnextdisk = [];
         for b = 1:n
-            % disp(circles_top(1))
-            % disp(circles_top(end))
-            % disp('b ='), disp(abs(circles(b).x + 1 - circles_top(end).x));
-            % disp('c ='), disp(abs(circles(b).x - circles_top(end).x));
             if circles_top(end).x < circles(b).x && ...
                 abs(circles(b).x - circles_top(end).x) < ...
                     abs(circles(b).x - circles_top(end).x - 1)
@@ -59,22 +52,16 @@ function e = top_level(circles,n)
                     pair(circles_top(end).x,circles_top(end).y,circles_top(end).r, ...
                     circles(b).x,circles(b).y,circles(b).r)];
             end
-            %disp(top_edges)
         end
-        %disp('a'), disp(possnextdisk)
-        %disp(possnextdisk(:,5))
+
         [~,II] = max(possnextdisk(:,5));
-        %disp(II)
         top_edges = [top_edges; possnextdisk(II,:)];
         k = k + 1;
         circles_top(k).x = possnextdisk(II,4);
         circles_top(k).y = possnextdisk(II,5);
         circles_top(k).r = possnextdisk(II,6);
-        %disp(circles_top(k))
     end
     
     e = top_edges;
-    %[e,~] = order(e);
-    %disp(e);
 
 end

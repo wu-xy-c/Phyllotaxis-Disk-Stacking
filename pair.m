@@ -10,9 +10,7 @@ function p = pair(x1,y1,r1,x2,y2,r2)
     xl = max(x1,x2);
     xs = min(x1,x2);
     d12 = min(sqrt((xl-xs)^2+(y2-y1)^2), sqrt(((xs+1)-xl)^2+(y2-y1)^2));
-    %disp(d12);
-    %disp(abs(r1 + r2 - d12));
-    if abs(r1 + r2 - d12)<1e-3
+    if abs(r1 + r2 - d12) < epsilon
         p = [x1,y1,r1,x2,y2,r2];
     else
         p = [];

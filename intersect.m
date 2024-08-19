@@ -16,7 +16,7 @@ function per_new_disk = intersect(ndisk, circles, n)
             xs = min(ndisk(p,1),circles(q).x);
             d12 = min(sqrt((xl-xs)^2+(ndisk(p,2)-circles(q).y)^2), ...
                 sqrt(((xs+1)-xl)^2+(ndisk(p,2)-circles(q).y)^2));
-            if (ndisk(p,3) + circles(q).r - d12) > 1e-10
+            if (ndisk(p,3) + circles(q).r - d12) > epsilon
                 N = [N,p];
             end
         end
