@@ -21,12 +21,12 @@ function ndisk_dip = dip(adjacent,r3)
     gdsize = size(grad);
     ndisk_dip = [];
     for kk = 1:gdsize(2)
-        if grad(1,kk) < epsilon && grad(1,mod(kk,gdsize(2))+1) > epsilon
+        if grad(1,kk) < -epsilon && grad(1,mod(kk,gdsize(2))+1) > epsilon
 
             p = 0;
             l = kk;
 
-            while grad(1,l) < epsilon 
+            while grad(1,l) < -epsilon 
                 p = p + 1;
                 if kk-p == 0
                     l = gdsize(2);

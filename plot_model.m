@@ -5,6 +5,9 @@
 
 function plot_model(circles,n)
 
+    tiledlayout(2,2)
+    nexttile
+
     % Boundary with 1cm circumference.
 
     plot(linspace(0,1,200),linspace(0,0,200),'k-');
@@ -12,6 +15,36 @@ function plot_model(circles,n)
     plot(linspace(0,0,200),linspace(0,2,200),'k-');
     plot(linspace(1,1,200),linspace(0,2,200),'k-');
 
+    % Plot right parastichy lines
+
+    for a = 1:n
+        for b = 1:n
+            k = size(pair(circles(a).x,circles(a).y,circles(a).r, ...
+                    circles(b).x,circles(b).y,circles(b).r));
+            if k(2) > 0
+                line = order(pair(circles(a).x,circles(a).y,circles(a).r, ...
+                        circles(b).x,circles(b).y,circles(b).r));
+                if line(1) > line(4)
+                    line(4) = line(4) + 1;
+                end
+                if ((line(2)-line(5))/(line(1)-line(4))) > epsilon
+                    plot([line(1),line(4)],[line(2),line(5)],'r-')
+                    hold on
+                end
+            end
+        end
+    end
+
+    axis equal
+
+    nexttile([2,1])
+
+    % Boundary with 1cm circumference.
+
+    plot(linspace(0,1,200),linspace(0,0,200),'k-');
+    hold on;
+    plot(linspace(0,0,200),linspace(0,2,200),'k-');
+    plot(linspace(1,1,200),linspace(0,2,200),'k-');
 
     % Plots the disks.
 
@@ -20,8 +53,41 @@ function plot_model(circles,n)
         p = p + 1;
         [x,y] = circle(circles(p).x,circles(p).y,circles(p).r);
         plot(x,y);
+        hold on
         plot(circles(p).x,circles(p).y,'k.');
     end
 
     axis equal
+
+    nexttile
+
+    % Boundary with 1cm circumference.
+
+    plot(linspace(0,1,200),linspace(0,0,200),'k-');
+    hold on;
+    plot(linspace(0,0,200),linspace(0,2,200),'k-');
+    plot(linspace(1,1,200),linspace(0,2,200),'k-');
+
+    % Plot left parastichy lines
+
+    for a = 1:n
+        for b = 1:n
+            k = size(pair(circles(a).x,circles(a).y,circles(a).r, ...
+                    circles(b).x,circles(b).y,circles(b).r));
+            if k(2) > 0
+                line = order(pair(circles(a).x,circles(a).y,circles(a).r, ...
+                        circles(b).x,circles(b).y,circles(b).r));
+                if line(1) > line(4)
+                    line(4) = line(4) + 1;
+                end
+                if ((line(2)-line(5))/(line(1)-line(4))) < -epsilon
+                    plot([line(1),line(4)],[line(2),line(5)],'b-')
+                    hold on
+                end
+            end
+        end
+    end
+
+    axis equal
+
 end
