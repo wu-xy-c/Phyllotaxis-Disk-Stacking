@@ -5,6 +5,8 @@
 
 function plot_model(circles,n)
 
+    max_height = max([circles.y]);
+
     tiledlayout(2,2)
     nexttile
 
@@ -12,8 +14,8 @@ function plot_model(circles,n)
 
     plot(linspace(0,1,200),linspace(0,0,200),'k-');
     hold on;
-    plot(linspace(0,0,200),linspace(0,2,200),'k-');
-    plot(linspace(1,1,200),linspace(0,2,200),'k-');
+    plot(linspace(0,0,200),linspace(0,max_height,200),'k-');
+    plot(linspace(1,1,200),linspace(0,max_height,200),'k-');
 
     % Plot right parastichy lines
 
@@ -43,18 +45,30 @@ function plot_model(circles,n)
 
     plot(linspace(0,1,200),linspace(0,0,200),'k-');
     hold on;
-    plot(linspace(0,0,200),linspace(0,2,200),'k-');
-    plot(linspace(1,1,200),linspace(0,2,200),'k-');
+    plot(linspace(0,0,200),linspace(0,max_height,200),'k-');
+    plot(linspace(1,1,200),linspace(0,max_height,200),'k-');
 
     % Plots the disks.
 
     p = 0;
     while p<n
+
         p = p + 1;
         [x,y] = circle(circles(p).x,circles(p).y,circles(p).r);
-        plot(x,y);
+        plot(x,y,'g-');
         hold on
         plot(circles(p).x,circles(p).y,'k.');
+
+        if (circles(p).x + circles(p).r) > 1 
+            [x,y] = circle(circles(p).x-1,circles(p).y,circles(p).r);
+            plot(x,y,'g-');
+            plot(circles(p).x-1,circles(p).y,'k.');
+        elseif (circles(p).x - circles(p).r) < 0
+            [x,y] = circle(circles(p).x+1,circles(p).y,circles(p).r);
+            plot(x,y,'g-');
+            plot(circles(p).x+1,circles(p).y,'k.');
+        end
+
     end
 
     axis equal
@@ -65,8 +79,8 @@ function plot_model(circles,n)
 
     plot(linspace(0,1,200),linspace(0,0,200),'k-');
     hold on;
-    plot(linspace(0,0,200),linspace(0,2,200),'k-');
-    plot(linspace(1,1,200),linspace(0,2,200),'k-');
+    plot(linspace(0,0,200),linspace(0,max_height,200),'k-');
+    plot(linspace(1,1,200),linspace(0,max_height,200),'k-');
 
     % Plot left parastichy lines
 

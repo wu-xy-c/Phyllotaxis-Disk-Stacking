@@ -10,6 +10,8 @@ function p = pair(x1,y1,r1,x2,y2,r2)
     xl = max(x1,x2);
     xs = min(x1,x2);
     d12 = min(sqrt((xl-xs)^2+(y2-y1)^2), sqrt(((xs+1)-xl)^2+(y2-y1)^2));
+    % Sees if the distance between the centres is close enough to the sum
+    % of the radii.
     if abs(r1 + r2 - d12) < epsilon
         p = [x1,y1,r1,x2,y2,r2];
     else

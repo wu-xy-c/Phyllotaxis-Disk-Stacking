@@ -8,6 +8,9 @@ function [circles,k] = next_disk(pndisk,circles,n)
 
     nd = size(pndisk);
     low = [];
+    
+    % Finds all the y-values of the set of the next possible disks and then
+    % finds the index of the lowest next possible disk.
 
     for d = 1:nd(1)
         low = [low,pndisk(d,2)];
@@ -15,6 +18,9 @@ function [circles,k] = next_disk(pndisk,circles,n)
 
     [~,I] = min(low);
 
+    % Assigns this disk to be placed and it is added to the set of all
+    % disks place.
+    
     circles(n+1).x = pndisk(I,1);
     circles(n+1).y = pndisk(I,2);
     circles(n+1).r = pndisk(I,3);

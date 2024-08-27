@@ -8,6 +8,13 @@
 
 function per_new_disk = intersect(ndisk, circles, n)
 
+    % We determine which new disks do not overlap the currently placed
+    % disks in circles by first finding the smallest distance between them,
+    % considering the idea that if the disks are close to zero and one. We
+    % then see if the distance between two disks is smaller than the sum of
+    % the radii. If it is, then they intersect and we remove them from the
+    % set of all possible new disk.
+
     t = size(ndisk);
     N = [];
     for p = 1:t(1)

@@ -1,39 +1,32 @@
-% This script is a function which simulates the disk stacking model where
-% the radius is varied by a function radius.
+% This script is a function which simulates the disk stacking model. Given
+% the inputs of the number of initial disks in the initial condition k, the
+% number of disks placed p, and the function Radius giving the radius of
+% the new disk, the function gives the position and radius of disks stacked
+% around a cylinder with circumference 1.
 
-function [circles, n] = run_model
+function [circles, n] = run_model(k,p,Radius)
 
-    k = 5;                                 % Number of disks.
     [circles,n] = initial_condition1(k);
-    edges = top_level(circles,n);
+    top_chain = top_level(circles,n);
+    cir = n;                                % Number of disks in the plot
 
-    p = 100;                                 % Number of new disks placed.
     for a = 1:p
 
         % Radius of ath new disk.
 
-        %r_dash = 0.05;
+        cir = n;
+        r = Radius(circles(cir).y);
 
-        if a == 1
-            r3 = 0.1;
-        elseif circles(a-1).y < 0.6
-            r3 = 0.1;
-        elseif circles(a-1).y > 1.1
-            r3 = 0.075;
-        else
-            r3 = -0.05*circles(a-1).y + 0.13;
-        end
-        
-        ndisk_adj = adj(edges,r3);
-        ndisk_dip = dip(edges,r3);
+        ndisk_adj = adj(top_chain,r);
+        ndisk_dip = dip(top_chain,r);
 
         ndisk = [ndisk_adj;ndisk_dip];
 
-        pndisk = intersect(ndisk, circles, n);
+        poss_ndisk = intersect(ndisk, circles, n);
 
-        [circles,n] = next_disk(pndisk,circles,n);
+        [circles,n] = next_disk(poss_ndisk,circles,n);
 
-        edges = top_level(circles,n);
+        top_chain = top_level(circles,n);
 
     end
     

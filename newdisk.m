@@ -42,8 +42,13 @@ function [x3,y3] = newdisk(x1,y1,r1,x2,y2,r2,r3)
         r2 = r22;
     end
 
+    % Using the cosine trigonometric equation, we calculate the position of
+    % the next circle and the angle in the corner (d13,d12).
+
     d13 = r1 + r3;                        % distance between disks 1 and 3
     d23 = r2 + r3;                        % distance between disks 2 and 3
+
+    % Gives the argument of disks 1 and 2
 
     grad = (y2-y1)/(x2-x1);                 % Gives the horizontal angle of
     if grad == inf || isnan(grad) == 1      % the line bisecting (x1,y1),
@@ -56,19 +61,14 @@ function [x3,y3] = newdisk(x1,y1,r1,x2,y2,r2,r3)
 
     theta = horz + tri;                   % angle needed to compute centre
 
+    % Picks the smaller angle as that is the angle we need to compute the
+    % position of the new centre given the angle. 
+
     if theta>pi/2
         theta = pi - theta;
-        if (x2-x1)<0.5
-            x3 = mod(real(x1 - d13*cos(theta)), 1);
-        else    
-            x3 = mod(real(d13*cos(theta) + x1), 1);
-        end
-    else
-        if (x2-x1)>0.5
-            x3 = mod(real(x1 - d13*cos(theta)), 1);
-        else    
-            x3 = mod(real(d13*cos(theta)) + x1, 1); 
-        end   
+        x3 = mod(real(x1 - d13*cos(theta)), 1);
+    else 
+        x3 = mod(real(d13*cos(theta) + x1), 1);   
     end
 
     y3 = real(d13*sin(theta) + y1);     % the y is imaginary but idk how
