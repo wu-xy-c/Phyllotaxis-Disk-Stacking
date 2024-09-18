@@ -33,6 +33,7 @@ function ndisk_dip = dip(adjacent,r3)
     grad = [grad, (adjacent(s(1),5)-adjacent(s(1),2))/ ... 
         (1+adjacent(s(1),4)-adjacent(s(1),1))];
 
+
     % We determine where there is a dip in the chain, that is where the
     % gradient is negative and then positive in the next entry.
 
@@ -67,16 +68,16 @@ function ndisk_dip = dip(adjacent,r3)
             % have negative and positive gradient respectively. This
             % considers if the gradient loops around near the 0 and 1 mark.
 
-            if kk-p>0
-                down = kk-p:kk;
+            if kk-(p-1)>0
+                down = kk-(p-1):kk;
             else
-                down = [kk-p+gdsize(2):gdsize(2),1:kk];
+                down = [kk-(p-1)+gdsize(2):gdsize(2),1:kk];
             end
 
-            if kk+1+q>gdsize(2)
-                up = [kk+1:gdsize(2),1:kk+1+q-gdsize(2)];
+            if kk+1+(q-1)>gdsize(2)
+                up = [kk+1:gdsize(2),1:kk+1+(q-1)-gdsize(2)];
             else
-                up = kk+1:kk+1+q;
+                up = kk+1:kk+1+(q-1);
             end
 
             % We pair up the disks on the negative gradient side with the

@@ -2,7 +2,8 @@
 
 tic
 
-[circles, n] = run_model(30,600,@R1);
+[circles,k,n,left,right] = run_model(@initial_condition1,5,1000,@R2);
 plot_model(circles,n)
+plot_para_model(circles,k,n,left,right)
 
 toc
